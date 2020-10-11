@@ -4,15 +4,15 @@
     <div class="result">{{ current }}</div>
     <button class="span-2" v-on:click="clear()">Clear</button>
     <button v-on:click="remove()">Del</button>
-    <button>/</button>
+    <button v-on:click="operation('/')">/</button>
     <button v-on:click="append(7)">7</button>
     <button v-on:click="append(8)">8</button>
     <button v-on:click="append(9)">9</button>
-    <button>*</button>
+    <button v-on:click="operation('*')">*</button>
     <button v-on:click="append(4)">4</button>
     <button v-on:click="append(5)">5</button>
     <button v-on:click="append(6)">6</button>
-    <button>-</button>
+    <button v-on:click="operation('-')">-</button>
     <button v-on:click="append(1)">1</button>
     <button v-on:click="append(2)">2</button>
     <button v-on:click="append(3)">3</button>
@@ -47,20 +47,33 @@ export default {
       this.operatorClicked = false;
     },
     operation(operator) {
+      switch (operator) {
+        case "+":
+          this.add();
+          break;
+        case "-":
+          this.subtract();
+          break;
+        case "*":
+          this.multiply();
+          break;
+        case "/":
+          this.divide();
+          break;
+      }
+    },
+    add() {
       if (this.operatorClicked == true) {
         return;
       }
       if (this.current == " + ") {
         return;
       }
-      if (this.previous.includes("+")) {
-        console.log("ada");
-      }
-      if (operator == "+") {
-        this.a = this.a + parseInt(this.current);
-        this.previous = this.previous + this.current + " " + operator + " ";
-        this.current = this.a;
-      }
+
+      this.a = this.a + parseInt(this.current);
+      this.previous = this.previous + this.current + " + ";
+      this.current = this.a;
+
       this.operatorClicked = true;
     },
     remove() {
@@ -70,9 +83,53 @@ export default {
         this.current = "0";
       }
     },
-    multiply() {},
-    subtract() {},
-    divide() {},
+    multiply() {
+      if (this.a == 0) {
+        this.a = 1;
+      }
+      if (this.operatorClicked == true) {
+        return;
+      }
+      if (this.current == " * ") {
+        return;
+      }
+
+      this.a = this.a * parseInt(this.current);
+      this.previous = this.previous + this.current + " * ";
+      this.current = this.a;
+
+      this.operatorClicked = true;
+    },
+    subtract() {
+      if (this.operatorClicked == true) {
+        return;
+      }
+      if (this.current == " - ") {
+        return;
+      }
+
+      this.a = this.a - parseInt(this.current);
+
+      this.previous = this.previous + this.current + " - ";
+      this.current = this.a;
+
+      this.operatorClicked = true;
+    },
+    divide() {
+      if (this.operatorClicked == true) {
+        return;
+      }
+      if (this.current == " / ") {
+        return;
+      }
+
+      this.a = this.a / parseInt(this.current);
+
+      this.previous = this.previous + this.current + " / ";
+      this.current = this.a;
+
+      this.operatorClicked = true;
+    },
     dot() {
       if (this.current.indexOf(".") === -1) {
         this.current = this.current + ".";
