@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:lts-alpine as build-stage
 
 # install simple http server for serving static content
 RUN npm install -g http-server
@@ -20,3 +20,11 @@ RUN npm run build
 
 EXPOSE 8088
 CMD [ "http-server", "dist" ]
+
+#For Production
+FROM nginx as production-stage
+RUN mkdir /app
+WORKDIR /app
+COPY --from=build-stage /app/dist /app
+EXPOSE 80
+CMD ["nginx","-g","daemon off"]
