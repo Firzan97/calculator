@@ -6,16 +6,22 @@ import Calculation from "../views/Calculation.vue"
 Vue.use(VueRouter)
 
 const routes = [{
-        path: '/home',
-        name: 'Home',
-        component: Home
-    },
-    {
-        path: '/calculation',
-        name: 'Calculation',
-        component: Calculation
+    path: '/home',
+    name: 'Home',
+    component: Home,
+    meta: {
+        title: 'Home Page',
+
     }
-]
+}, {
+    path: '/calculation',
+    name: 'Calculation',
+    component: Calculation,
+    meta: {
+        title: 'Calculation',
+
+    }
+}]
 
 const router = new VueRouter({
     mode: "history",
