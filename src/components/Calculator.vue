@@ -1,12 +1,40 @@
 <template>
   <div>
-    <div class="calculator">
+    <div class="calculator-type p-4">
+      <b-button
+        v-on:click="isHidden = false"
+        variant=" outline-primary"
+        id="scientific shadow-sm"
+        v-if="isHidden"
+        >Normal</b-button
+      >
+      <b-button
+        v-on:click="isHidden = true"
+        variant=" outline-primary"
+        id="scientific shadow-sm"
+        v-else
+        >Scientific</b-button
+      >
+    </div>
+    <b-container class="calculator shadow-lg p-3 mb-5 bg-white rounded p-5">
       <div class="result">{{ previous }}</div>
       <div class="result">{{ current }}</div>
+      <button v-if="isHidden" class="scientific" v-on:click="operation('sqrt')">
+        sqr()
+      </button>
       <button class="span-2" v-on:click="clear()">Clear</button>
       <button v-on:click="remove()">Del</button>
       <button v-on:click="operation('/')">/</button>
+      <button
+        v-if="isHidden"
+        class="scientific"
+        v-on:click="operation('factor')"
+      >
+        n!
+      </button>
+
       <button v-on:click="append(7)">7</button>
+
       <button v-on:click="append(8)">8</button>
       <button v-on:click="append(9)">9</button>
       <button v-on:click="operation('*')">*</button>
@@ -20,8 +48,8 @@
       <button v-on:click="operation('+')">+</button>
       <button v-on:click="append(0)">0</button>
       <button v-on:click="dot()">.</button>
-      <button class="span-2">=</button>
-    </div>
+      <button v-on:click="operation('=')" class="span-2">=</button>
+    </b-container>
   </div>
 </template>
 
@@ -30,14 +58,18 @@ export default {
   name: "Calculator",
   data() {
     return {
+      type: "Scientific",
+      isHidden: false,
       a: 0,
       b: 0,
       current: "0",
       previous: "",
       operatorClicked: false,
+      latestOperator: "",
     };
   },
   methods: {
+    showScientific() {},
     append(number) {
       if (this.current == "0") {
         this.current = "";
@@ -62,7 +94,41 @@ export default {
         case "/":
           this.divide();
           break;
+        case "=":
+          this.equal();
+          break;
+        case "sqrt":
+          this.sqrt();
+          break;
+        case "factor":
+          this.factor();
+          break;
       }
+    },
+    factor() {
+      this.a = 1;
+      this.latestOperator = "factor";
+      if (this.current == " factor() ") {
+        return;
+      }
+      var temp;
+      for (temp = parseInt(this.current); temp > 0; temp--) {
+        this.a = this.a * parseFloat(temp);
+        console.log(parseFloat(temp));
+      }
+      this.previous = "factor(" + parseFloat(this.current) + ") ";
+      this.current = this.a;
+    },
+    sqrt() {
+      this.latestOperator = "sqrt";
+
+      if (this.current == " sqrt() ") {
+        return;
+      }
+      this.a = parseFloat(this.current) * parseFloat(this.current);
+
+      this.previous = "sqrt(" + parseFloat(this.current) + ") ";
+      this.current = this.a;
     },
     add() {
       if (this.operatorClicked == true) {
@@ -71,12 +137,17 @@ export default {
       if (this.current == " + ") {
         return;
       }
+      if (this.latestOperator == "sqrt" || this.latestOperator == "factor") {
+        this.previous = this.current + " + ";
+      } else {
+        this.a = this.a + parseFloat(this.current);
+        this.previous = this.previous + this.current + " + ";
+      }
 
-      this.a = this.a + parseInt(this.current);
-      this.previous = this.previous + this.current + " + ";
       this.current = this.a;
 
       this.operatorClicked = true;
+      this.latestOperator = "+";
     },
     remove() {
       if (this.current.length != 1) {
@@ -86,6 +157,8 @@ export default {
       }
     },
     multiply() {
+      this.latestOperator = "*";
+
       if (this.a == 0) {
         this.a = 1;
       }
@@ -96,13 +169,15 @@ export default {
         return;
       }
 
-      this.a = this.a * parseInt(this.current);
+      this.a = this.a * parseFloat(this.current);
       this.previous = this.previous + this.current + " * ";
       this.current = this.a;
 
       this.operatorClicked = true;
     },
     subtract() {
+      this.latestOperator = "-";
+
       if (this.operatorClicked == true) {
         return;
       }
@@ -110,7 +185,11 @@ export default {
         return;
       }
 
-      this.a = this.a - parseInt(this.current);
+      if (this.a == 0) {
+        this.a = Math.abs(parseFloat(this.current));
+      } else {
+        this.a = this.a - parseFloat(this.current);
+      }
 
       this.previous = this.previous + this.current + " - ";
       this.current = this.a;
@@ -118,6 +197,8 @@ export default {
       this.operatorClicked = true;
     },
     divide() {
+      this.latestOperator = "/";
+
       if (this.operatorClicked == true) {
         return;
       }
@@ -125,7 +206,11 @@ export default {
         return;
       }
 
-      this.a = this.a / parseInt(this.current);
+      if (this.a == 0) {
+        this.a = Math.abs(parseFloat(this.current));
+      } else {
+        this.a = this.a / parseFloat(this.current);
+      }
 
       this.previous = this.previous + this.current + " / ";
       this.current = this.a;
@@ -142,17 +227,56 @@ export default {
       this.previous = "";
       this.current = "0";
     },
+    equal() {
+      if (this.operatorClicked == true) {
+        return;
+      }
+      this.operatorClicked = true;
+
+      switch (this.latestOperator) {
+        case "+":
+          this.a = this.a + parseFloat(this.current);
+          this.previous = this.previous + this.current + " = ";
+          this.current = this.a;
+          break;
+        case "-":
+          this.a = this.a - parseFloat(this.current);
+          this.previous = this.previous + this.current + " = ";
+          this.current = this.a;
+          break;
+        case "*":
+          this.a = this.a * parseFloat(this.current);
+          this.previous = this.previous + this.current + " = ";
+          this.current = this.a;
+          break;
+        case "/":
+          this.a = this.a / parseFloat(this.current);
+          this.previous = this.previous + this.current + " = ";
+          this.current = this.a;
+          break;
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
 .calculator {
+  width: auto;
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(4, 100px);
+  grid-template-columns: repeat(5, 100px);
   grid-template-rows: minmax(120px, auto) repeat(6, 100px);
-  padding: 90px;
+}
+.scientific {
+  background-color: white;
+  cursor: pointer;
+  color: black;
+}
+.scientific:hover {
+  background-color: lightskyblue;
+  cursor: pointer;
+  color: black;
 }
 button {
   background-color: aliceblue;
