@@ -19,22 +19,10 @@
     <b-container class="calculator shadow-lg p-3 mb-5 bg-white rounded p-5">
       <div class="result">{{ previous }}</div>
       <div class="result">{{ current }}</div>
-      <button v-if="isHidden" class="scientific" v-on:click="operation('sqrt')">
-        sqr()
-      </button>
       <button class="span-2" v-on:click="clear()">Clear</button>
       <button v-on:click="remove()">Del</button>
       <button v-on:click="operation('/')">/</button>
-      <button
-        v-if="isHidden"
-        class="scientific"
-        v-on:click="operation('factor')"
-      >
-        n!
-      </button>
-
       <button v-on:click="append(7)">7</button>
-
       <button v-on:click="append(8)">8</button>
       <button v-on:click="append(9)">9</button>
       <button v-on:click="operation('*')">*</button>
@@ -49,6 +37,16 @@
       <button v-on:click="append(0)">0</button>
       <button v-on:click="dot()">.</button>
       <button v-on:click="operation('=')" class="span-2">=</button>
+      <button v-if="isHidden" class="scientific" v-on:click="operation('sqrt')">
+        sqr()
+      </button>
+      <button
+        v-if="isHidden"
+        class="scientific"
+        v-on:click="operation('factor')"
+      >
+        n!
+      </button>
     </b-container>
   </div>
 </template>
@@ -69,7 +67,6 @@ export default {
     };
   },
   methods: {
-    showScientific() {},
     append(number) {
       if (this.current == "0") {
         this.current = "";
@@ -265,14 +262,10 @@ export default {
   width: auto;
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(5, 100px);
-  grid-template-rows: minmax(120px, auto) repeat(6, 100px);
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: minmax(120px, auto) repeat(7, 100px);
 }
-.scientific {
-  background-color: white;
-  cursor: pointer;
-  color: black;
-}
+
 .scientific:hover {
   background-color: lightskyblue;
   cursor: pointer;
