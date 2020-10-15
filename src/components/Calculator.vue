@@ -1,25 +1,71 @@
 <template>
-  <div class="calculator">
-    <div class="result">{{ previous }}</div>
-    <div class="result">{{ current }}</div>
-    <button class="span-2" v-on:click="clear()">Clear</button>
-    <button v-on:click="remove()">Del</button>
-    <button v-on:click="operation('/')">/</button>
-    <button v-on:click="append(7)">7</button>
-    <button v-on:click="append(8)">8</button>
-    <button v-on:click="append(9)">9</button>
-    <button v-on:click="operation('*')">*</button>
-    <button v-on:click="append(4)">4</button>
-    <button v-on:click="append(5)">5</button>
-    <button v-on:click="append(6)">6</button>
-    <button v-on:click="operation('-')">-</button>
-    <button v-on:click="append(1)">1</button>
-    <button v-on:click="append(2)">2</button>
-    <button v-on:click="append(3)">3</button>
-    <button v-on:click="operation('+')">+</button>
-    <button v-on:click="append(0)">0</button>
-    <button v-on:click="dot()">.</button>
-    <button class="span-2">=</button>
+  <div>
+    <div class="calculator">
+      <div class="result">{{ previous }}</div>
+      <div class="result">{{ current }}</div>
+      <button class="span-2" v-on:click="clear()">Clear</button>
+      <button v-on:click="remove()">Del</button>
+      <button v-on:click="operation('/')">/</button>
+      <button v-on:click="append(7)">7</button>
+      <button v-on:click="append(8)">8</button>
+      <button v-on:click="append(9)">9</button>
+      <button v-on:click="operation('*')">*</button>
+      <button v-on:click="append(4)">4</button>
+      <button v-on:click="append(5)">5</button>
+      <button v-on:click="append(6)">6</button>
+      <button v-on:click="operation('-')">-</button>
+      <button v-on:click="append(1)">1</button>
+      <button v-on:click="append(2)">2</button>
+      <button v-on:click="append(3)">3</button>
+      <button v-on:click="operation('+')">+</button>
+      <button v-on:click="append(0)">0</button>
+      <button v-on:click="dot()">.</button>
+      <button class="span-2">=</button>
+    </div>
+    <b-container>
+      <b-row>
+        <b-col>1 of 3</b-col>
+        <b-col>2 of 3</b-col>
+        <b-col>3 of 3</b-col>
+        <b-col>1 of 3</b-col>
+        <b-col>2 of 3</b-col>
+        <b-col>3 of 3</b-col>
+        <b-col>1 of 3</b-col>
+        <b-col>2 of 3</b-col>
+        <b-col>3 of 3</b-col>
+        <b-col>1 of 3</b-col>
+        <b-col>2 of 3</b-col>
+        <b-col>3 of 3</b-col>
+      </b-row>
+      <b-row>
+        <b-col>1 of 3</b-col>
+        <b-col>2 of 3</b-col>
+        <b-col>3 of 3</b-col>
+        <b-col>1 of 3</b-col>
+        <b-col>2 of 3</b-col>
+        <b-col>3 of 3</b-col>
+        <b-col>1 of 3</b-col>
+        <b-col>2 of 3</b-col>
+        <b-col>3 of 3</b-col>
+        <b-col>1 of 3</b-col>
+        <b-col>2 of 3</b-col>
+        <b-col>3 of 3</b-col>
+        <b-col>2 of 3</b-col>
+        <b-col>3 of 3</b-col>
+      </b-row>
+    </b-container>
+    <b-container class="bv-example-row">
+      <b-row>
+        <b-col class="col-12 blue">1 of 2</b-col>
+        <b-col>2 of 2</b-col>
+      </b-row>
+
+      <b-row>
+        <b-col>1 of 3</b-col>
+        <b-col>2 of 3</b-col>
+        <b-col>3 of 3</b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 

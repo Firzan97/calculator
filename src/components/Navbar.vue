@@ -1,14 +1,18 @@
 <template>
   <div>
-    <b-navbar type="light" variant="dark">
-      <b-navbar-nav>
-        <b-nav-item> <router-link to="/home">Home</router-link></b-nav-item>
-        <b-nav-item>
-          <router-link to="/calculation">Calculation</router-link></b-nav-item
-        >
-      </b-navbar-nav>
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand href="#">Calculator</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <b-nav-item to="/home">Home</b-nav-item>
+          <b-nav-item to="/calculation">Calculate</b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
     </b-navbar>
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
