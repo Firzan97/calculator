@@ -1,10 +1,6 @@
 <template>
-  <div class="background">
-    <body>
-      <div class="menu">
-        <h1 class="p-5">Simple Calculator App using VueJs</h1>
-      </div>
-    </body>
+  <div class="homebody p-4">
+    <h1>Simple Calculator App using VueJs</h1>
   </div>
 </template>
 
@@ -15,9 +11,9 @@ export default {
 </script>
 
 <style scoped>
-.home-body {
-}
-body {
-  background-color: red;
+.homebody {
+  background-image: url("../assets/images/wallpaper.jpg");
+  height: 100vh;
+  color: azure;
 }
 </style>
